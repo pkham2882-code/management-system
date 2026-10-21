@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Client Management System</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="brand-icon">CM</div>
+        <div><strong>ClientDesk</strong><span>MANAGEMENT SYSTEM</span></div>
+      </div>
+      <div class="nav-label">WORKSPACE</div>
+      <div class="nav-item active"><span class="nav-symbol">▦</span> Clients</div>
+      <div class="sidebar-note">
+        <div class="note-icon">✓</div>
+        <strong>Your client hub</strong>
+        <p>Keep your client information organized in one place.</p>
+      </div>
+      <div class="sidebar-footer"><span class="status-dot"></span> Local database connected</div>
+    </aside>
+
+    <main class="main-content">
+      <header class="topbar">
+        <div>
+          <div class="eyebrow">WORKSPACE / CLIENTS</div>
+          <h1>Client Management</h1>
+          <p class="subtitle">Manage your client relationships and information.</p>
+        </div>
+        <button id="newClientBtn" class="button primary"><span>＋</span> Add new client</button>
+      </header>
+
+      <section class="stats-grid">
+        <article class="stat-card">
+          <div class="stat-top"><span>Total clients</span><span class="stat-icon blue">♙</span></div>
+          <div class="stat-number" id="totalClients">0</div>
+          <div class="stat-caption">Saved in your database</div>
+        </article>
+        <article class="stat-card">
+          <div class="stat-top"><span>Companies</span><span class="stat-icon purple">▤</span></div>
+          <div class="stat-number" id="companyClients">0</div>
+          <div class="stat-caption">Company client records</div>
+        </article>
+        <article class="stat-card">
+          <div class="stat-top"><span>VIP clients</span><span class="stat-icon amber">✦</span></div>
+          <div class="stat-number" id="vipClients">0</div>
+          <div class="stat-caption">Priority relationships</div>
+        </article>
+      </section>
+
+      <section class="panel">
+        <div class="panel-heading">
+          <div><h2>Client directory</h2><p>View, search, edit, and manage your client records.</p></div>
+          <div class="search-wrap"><span>⌕</span><input id="searchInput" type="search" placeholder="Search clients..." aria-label="Search clients"></div>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead><tr>
+              <th>CLIENT</th><th>PHONE</th><th>COMPANY</th><th>TYPE</th><th>EMAIL</th><th>ACTIONS</th>
+            </tr></thead>
+            <tbody id="clientTableBody">
+              <tr><td colspan="6" class="empty-state">Loading clients...</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="table-footer"><span id="recordCount">0 records</span><span>Stored locally in SQLite</span></div>
+      </section>
+      <footer class="page-footer">ClientDesk <span>•</span> Client information made simple</footer>
+    </main>
+  </div>
+
+  <div id="clientModal" class="modal-backdrop hidden" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modal">
+      <div class="modal-header">
+        <div><div class="eyebrow">CLIENT RECORD</div><h2 id="modalTitle">Add new client</h2><p>Enter the client's details below.</p></div>
+        <button id="closeModalBtn" class="icon-button" aria-label="Close form">×</button>
+      </div>
+      <form id="clientForm">
+        <input type="hidden" id="recordId">
+        <div class="form-grid">
+          <label>Client ID <span class="required">*</span><input id="clientId" name="client_id" placeholder="CL-001" required maxlength="40"></label>
+          <label>Client name <span class="required">*</span><input id="name" name="name" placeholder="Enter client name" required maxlength="120"></label>
+          <label>Phone number<input id="phone" name="phone" placeholder="09xxxxxxxxx" maxlength="40"></label>
+          <label>Email address<input id="email" name="email" type="email" placeholder="client@example.com" maxlength="150"></label>
+          <label>Company<input id="company" name="company" placeholder="Company name" maxlength="120"></label>
+          <label>Client type<select id="type" name="type"><option>Individual</option><option>Company</option><option>VIP Client</option></select></label>
+          <label class="full-width">Address<textarea id="address" name="address" rows="2" placeholder="Enter client address" maxlength="500"></textarea></label>
+          <label class="full-width">Notes<textarea id="notes" name="notes" rows="3" placeholder="Additional notes..." maxlength="2000"></textarea></label>
+        </div>
+        <div id="formError" class="form-error hidden"></div>
+        <div class="modal-actions"><button type="button" id="cancelBtn" class="button secondary">Cancel</button><button type="submit" id="saveBtn" class="button primary">Save client</button></div>
+      </form>
+    </div>
+  </div>
+  <div id="toast" class="toast" role="status"></div>
+  <script src="app.js"></script>
+</body>
+</html>
